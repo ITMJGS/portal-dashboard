@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mengalihkan…</title>
+<style>body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:#f9f9f7;color:#52514e;display:flex;align-items:center;justify-content:center;min-height:100vh}@media(prefers-color-scheme:dark){body{background:#0d0d0d;color:#c3c2b7}}</style>
+<script>
+  // Link pendek: https://<akun>.github.io/<repo>/<id>  →  dashboard dengan id tersebut.
+  // GitHub Pages menampilkan halaman ini untuk alamat yang tidak ada sebagai file.
+  (function () {
+    var parts = location.pathname.split('/').filter(Boolean);
+    var id = decodeURIComponent(parts.pop() || '');
+    var base = '/' + parts.join('/') + (parts.length ? '/' : '');
+    var s = document.createElement('script');
+    s.src = base + 'dashboards.js';
+    s.onload = function () {
+      var d = (window.DASHBOARDS || []).find(function (x) { return x.id === id && /^https:\/\//.test(x.url); });
+      location.replace(d ? d.url : base + '?d=' + encodeURIComponent(id));
+    };
+    s.onerror = function () { location.replace(base); };
+    document.head.appendChild(s);
+  })();
+</script>
+</head>
+<body>Mengalihkan ke dashboard…</body>
+</html>

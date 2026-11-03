@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portal Dashboard</title>
+<script src="dashboards.js"></script>
+<script>
+  // Link langsung: ?d=<id> → pindah otomatis ke dashboard tersebut.
+  (function () {
+    var id = new URLSearchParams(location.search).get('d');
+    var d = id && (window.DASHBOARDS || []).find(function (x) { return x.id === id && /^https:\/\//.test(x.url); });
+    if (d) location.replace(d.url);
+  })();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="judul">Portal Dashboard</h1>
+      <div class="sub" id="subjudul"></div>
+    </div>
+    <button class="btn" id="themeBtn" type="button">Tema gelap</button>
+  </header>
+  <main id="view"></main>
+  <div class="foot">Setiap dashboard terbuka dengan akun Google Anda sendiri. Bila muncul permintaan akses, minta izin ke pemilik dashboard.</div>
+</div>
+<script src="portal.js"></script>
+</body>
+</html>
