@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Portal Dashboard</title>
-<script src="dashboards.js"></script>
+<script>
+  // Selalu ambil daftar dashboard terbaru (tanpa salinan lama di cache browser).
+  document.write('<script src="dashboards.js?t=' + Date.now() + '"><\/script>');
+</script>
 <script>
   // Link langsung: ?d=<id> → pindah otomatis ke dashboard tersebut.
   (function () {

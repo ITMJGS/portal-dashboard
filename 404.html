@@ -13,7 +13,7 @@
     var id = decodeURIComponent(parts.pop() || '');
     var base = '/' + parts.join('/') + (parts.length ? '/' : '');
     var s = document.createElement('script');
-    s.src = base + 'dashboards.js';
+    s.src = base + 'dashboards.js?t=' + Date.now();
     s.onload = function () {
       var d = (window.DASHBOARDS || []).find(function (x) { return x.id === id && /^https:\/\//.test(x.url); });
       location.replace(d ? d.url : base + '?d=' + encodeURIComponent(id));
