@@ -31,7 +31,7 @@ window.DASHBOARDS = [
     departemen: 'Sales',
     deskripsi: 'Room nights, revenue, event Fullboard/Fullday/Halfday dan tier perusahaan per bulan.',
     url: 'https://script.google.com/macros/s/AKfycbzaKeGPq-ediA7cwyQEbv-Jny5kKuZNznEbibO97-8FVYpX2rKG3SWFTqeYbvPCv4ix/exec',
-    bingkai: false,
+    bingkai: true,
   },
   {
     id: 'fnb',
