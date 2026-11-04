@@ -34,5 +34,12 @@ Perubahan tampil dalam 1–2 menit. Tidak perlu membuat file atau folder baru un
 - Repo dan GitHub Pages pada akun gratis bersifat **publik**: siapa pun yang tahu link-nya bisa melihat
   daftar dashboard dan alamat Web app-nya. Data di dalam dashboard tetap dilindungi oleh pengaturan akses
   masing-masing Web app (Google akan meminta login bila perlu).
-- Link pendek (`/fo`, `/sales`) bekerja lewat `404.html`: GitHub Pages menampilkan halaman itu untuk alamat
-  yang tidak ada, lalu halaman tersebut mengalihkan ke dashboard yang sesuai.
+- Link pendek (`/fo`, `/sales`, `/fnb`) bekerja lewat `404.html`: GitHub Pages menampilkan halaman itu untuk
+  alamat yang tidak ada, lalu dashboard yang sesuai ditampilkan di dalam bingkai. Alamat di browser tetap
+  alamat GitHub.
+- Supaya bisa tampil di dalam bingkai, setiap Apps Script harus mengizinkannya. Di fungsi `doGet`, tambahkan
+  `.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)` pada `HtmlOutput` yang dikembalikan, lalu
+  **Deploy → Manage deployments → Edit → Version: New version**. Tanpa baris ini bingkainya kosong;
+  tombol **Buka di tab penuh ↗** tetap bisa dipakai.
+- Web app sebaiknya di-deploy dengan akses **Anyone**. Halaman login Google tidak bisa tampil di dalam
+  bingkai, jadi akses yang mewajibkan login bisa membuat bingkai kosong bagi yang belum login.

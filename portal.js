@@ -37,10 +37,11 @@
     if (!ok(d)) {
       return '<div class="card off">' + head + '<div class="go"><span class="pill">Link belum diisi</span></div></div>';
     }
+    var link = base + encodeURIComponent(d.id);
     return '<div class="card">' + head +
-      '<div class="short">' + esc(base + d.id) + '</div>' +
-      '<div class="go"><a class="main" href="' + esc(d.url) + '">Buka dashboard →</a>' +
-      '<a class="nt" href="' + esc(d.url) + '" target="_blank" rel="noopener">Tab baru ↗</a></div></div>';
+      '<div class="short">' + esc(link) + '</div>' +
+      '<div class="go"><a class="main" href="' + esc(link) + '">Buka dashboard →</a>' +
+      '<a class="nt" href="' + esc(link) + '" target="_blank" rel="noopener">Tab baru ↗</a></div></div>';
   }
 
   // ?d=<id> yang tidak dikenal atau link-nya belum diisi

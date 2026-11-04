@@ -13,7 +13,7 @@
   (function () {
     var id = new URLSearchParams(location.search).get('d');
     var d = id && (window.DASHBOARDS || []).find(function (x) { return x.id === id && /^https:\/\//.test(x.url); });
-    if (d) location.replace(d.url);
+    if (d) location.replace(location.pathname.replace(/[^/]*$/, '') + encodeURIComponent(d.id));
   })();
 </script>
 <link rel="stylesheet" href="style.css">

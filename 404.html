@@ -2,26 +2,82 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mengalihkan…</title>
-<style>body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:#f9f9f7;color:#52514e;display:flex;align-items:center;justify-content:center;min-height:100vh}@media(prefers-color-scheme:dark){body{background:#0d0d0d;color:#c3c2b7}}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard</title>
+<style>
+/* Token & gaya mengikuti Dashboard Performa Front Office (HK FO) */
+:root{color-scheme:light;--page:#f9f9f7;--card:#fff;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--border:rgba(11,11,11,.10);--wash:rgba(11,11,11,.04);--accent:#2a78d6}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--page:#0d0d0d;--card:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--border:rgba(255,255,255,.10);--wash:rgba(255,255,255,.05);--accent:#3987e5}}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--page);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column}
+.bar{flex:none;display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--page);min-height:44px}
+.bar .name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .dept{color:var(--muted);font-size:12px;white-space:nowrap}
+.bar .sp{flex:1}
+.btn{background:transparent;border:1px solid var(--border);border-radius:999px;padding:4px 12px;font:inherit;font-size:12.5px;color:var(--ink2);text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--wash)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+iframe{flex:1;width:100%;border:0;display:block;background:var(--page)}
+.msg{margin:auto;max-width:460px;text-align:center;padding:24px;color:var(--ink2)}
+.msg h1{font-size:18px;color:var(--ink);margin:0 0 8px}
+@media(max-width:560px){.bar .dept,.bar .direct{display:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar">
+  <a class="btn" id="back" href="./">← Portal</a>
+  <span class="name" id="name">Memuat…</span>
+  <span class="dept" id="dept"></span>
+  <span class="sp"></span>
+  <a class="btn direct" id="direct" href="#" target="_blank" rel="noopener" hidden>Buka di tab penuh ↗</a>
+</div>
+<div class="msg" id="msg" hidden></div>
 <script>
-  // Link pendek: https://<akun>.github.io/<repo>/<id>  →  dashboard dengan id tersebut.
-  // GitHub Pages menampilkan halaman ini untuk alamat yang tidak ada sebagai file.
+  // Alamat pendek: https://<akun>.github.io/<repo>/<id>
+  // GitHub Pages menampilkan halaman ini untuk alamat yang tidak ada sebagai file,
+  // lalu dashboard dengan id tersebut ditampilkan di dalam bingkai sehingga alamatnya tetap alamat GitHub.
   (function () {
     var parts = location.pathname.split('/').filter(Boolean);
     var id = decodeURIComponent(parts.pop() || '');
     var base = '/' + parts.join('/') + (parts.length ? '/' : '');
+    var $ = function (x) { return document.getElementById(x); };
+    $('back').href = base;
+
+    function show(d) {
+      // Dashboard yang Apps Script-nya belum mengizinkan bingkai: alihkan langsung seperti biasa.
+      if (!d.bingkai) { location.replace(d.url); return; }
+      document.title = d.nama + ' · Portal Dashboard';
+      $('name').textContent = d.nama;
+      $('dept').textContent = d.departemen || '';
+      $('direct').href = d.url;
+      $('direct').hidden = false;
+      var f = document.createElement('iframe');
+      f.src = d.url;
+      f.title = d.nama;
+      f.allow = 'clipboard-read; clipboard-write; fullscreen';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      document.body.appendChild(f);
+    }
+    function notFound(text) {
+      document.title = 'Dashboard tidak ditemukan';
+      $('name').textContent = 'Dashboard tidak ditemukan';
+      var m = $('msg');
+      m.hidden = false;
+      m.innerHTML = '<h1>Dashboard tidak ditemukan</h1><p></p><a class="btn" href="' + base + '">Lihat semua dashboard</a>';
+      m.querySelector('p').textContent = text;
+    }
+
     var s = document.createElement('script');
     s.src = base + 'dashboards.js?t=' + Date.now();
     s.onload = function () {
-      var d = (window.DASHBOARDS || []).find(function (x) { return x.id === id && /^https:\/\//.test(x.url); });
-      location.replace(d ? d.url : base + '?d=' + encodeURIComponent(id));
+      var d = (window.DASHBOARDS || []).find(function (x) { return x.id === id; });
+      if (!d) return notFound('Tidak ada dashboard dengan kode "' + id + '".');
+      if (!/^https:\/\//.test(d.url || '')) return notFound('Link untuk "' + d.nama + '" belum diisi.');
+      show(d);
     };
-    s.onerror = function () { location.replace(base); };
+    s.onerror = function () { notFound('Daftar dashboard tidak bisa dimuat.'); };
     document.head.appendChild(s);
   })();
 </script>
-</head>
-<body>Mengalihkan ke dashboard…</body>
+</body>
 </html>
