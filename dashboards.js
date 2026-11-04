@@ -23,7 +23,7 @@ window.DASHBOARDS = [
     departemen: 'Front Office & Housekeeping',
     deskripsi: 'Check-in dan check-out, jam sibuk, asal tamu, request & issue, housekeeping.',
     url: 'https://script.google.com/macros/s/AKfycbzw9eEpvS9MKyNAJ-Fn-2uRhJhpsyQulb14uUEYU1cdwmlA1jRH4bkNAd2e4rAmOJZ2/exec',
-    bingkai: false,
+    bingkai: true,
   },
   {
     id: 'sales',
