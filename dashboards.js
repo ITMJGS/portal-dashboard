@@ -39,6 +39,6 @@ window.DASHBOARDS = [
     departemen: 'Food & Beverage',
     deskripsi: 'Pendapatan, transaksi, tamu dan rata-rata per check untuk 7 restoran, per menu dan waktu makan.',
     url: 'https://script.google.com/macros/s/AKfycbzi9DJUwi2j81Xi0dvzvKaN8srhfc1uH7n82YQgVgra_BxlKEr3cb63SrhelD2rQ38/exec',
-    bingkai: false,
+    bingkai: true,
   },
 ];
